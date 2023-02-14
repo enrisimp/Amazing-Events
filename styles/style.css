@@ -1,5 +1,97 @@
 *{
     margin: 0;
     padding: 0;
+}
+
+.center{
+    display: flex;
+    justify-content:center;
+}
+
+.right{
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+    text-decoration: none;
+}
+
+.cardFoto{
+    padding: 10px;
+}
+
+.card-footer > .col{
+    display: flex;
+    align-items: center;
+}
+
+.icons{
+    display: flex;
+    column-gap: 20px;
+}
+
+nav img {
+    background-color: white;
+    margin-left: 10px;
+}
+
+main{
+    padding: 20px 10px 30px;
+}
+
+footer{
+    margin-top:20px;
+    background-color: black;
+    color: white;
+    padding: 5px 0px;
+}
+
+.cheveron{
+    text-decoration: none;
+    color: black;
+    font-size:xx-large;
+}
+
+.titulo{
+    padding: 50px;
+}
+
+.links > a{
+    margin: 5px 10px;
+    padding: 10px;
     border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    background-color:white;
+}
+.links{
+    display: flex;
+
+}
+
+table {
+    width:75%
+    border: 1px solid black;
+}
+
+td, th{
+    padding:8px;
+    border: 1px solid black;
+}
+
+th{
+    background-color: gray;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn_reistr{
+    margin: 10px 0;
+    color: white;
+    background-color: green;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius:12px;
 }

@@ -95,3 +95,7 @@ fieldset{
     border: 1px solid black;
     border-radius:12px;
 }
+
+.card{
+    width: 18rem;
+}

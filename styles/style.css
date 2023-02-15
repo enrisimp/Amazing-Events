@@ -1,101 +1,337 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
+  /* border: 1px dotted black; */
 }
 
-.center{
-    display: flex;
-    justify-content:center;
+.center {
+  display: flex;
+  justify-content: center;
 }
 
-.right{
-    display:flex;
-    justify-content: flex-end;
-    align-items:center;
-    text-decoration: none;
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  text-decoration: none;
 }
 
-.cardFoto{
-    padding: 10px;
+.border {
+  border: 1px solid black;
 }
 
-.card-footer > .col{
-    display: flex;
-    align-items: center;
-}
-
-.icons{
-    display: flex;
-    column-gap: 20px;
+/* -------Nav ---------- */
+nav {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  margin-bottom: 100px;
 }
 
 nav img {
-    background-color: white;
-    margin-left: 10px;
+  background-color: white;
+  margin-left: 10px;
 }
 
-main{
-    padding: 20px 10px 30px;
+.links > a {
+  margin: 5px 10px;
+  padding: 10px;
+  border: 1px solid black;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+}
+.links {
+  display: flex;
 }
 
-footer{
-    margin-top:20px;
-    background-color: black;
-    color: white;
-    padding: 5px 0px;
+main {
+  padding: 20px 10px 30px;
 }
 
-.cheveron{
-    text-decoration: none;
-    color: black;
-    font-size:xx-large;
+/* ------------ Card ----------- */
+.cardFoto {
+  padding: 10px;
 }
 
-.titulo{
-    padding: 50px;
+.card-footer > .col {
+  display: flex;
+  align-items: center;
 }
 
-.links > a{
-    margin: 5px 10px;
-    padding: 10px;
-    border: 1px solid black;
-    text-decoration: none;
-    color: black;
-    background-color:white;
+.card {
+  width: 18rem;
+  padding: 10px;
+  box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.456);
 }
-.links{
-    display: flex;
 
+main img {
+  box-shadow: -10px -5px 20px rgba(0, 0, 0, 0.414);
 }
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ------------------ FOOTER -------------- */
+
+footer {
+  margin-top: 20px;
+  background-color: black;
+  color: white;
+  padding: 5px 0px;
+}
+
+.icons {
+  display: flex;
+  column-gap: 20px;
+}
+
+/* ------------------ HEADER ------------------ */
+.cheveron {
+  text-decoration: none;
+  color: black;
+  font-size: xx-large;
+}
+
+.titulo {
+  padding: 50px;
+  margin-top: 50px;
+}
+
+/* ----------------- TABLE ---------------------- */
 
 table {
-    width:75%
+  width: 75%;
+  border: 1px solid black;
+}
+
+td,
+th {
+  padding: 8px;
+  border: 1px solid black;
+}
+
+th {
+  background-color: gray;
+}
+
+/* ------------------ CONTACT -------------------- */
+fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn_reistr {
+  margin: 10px 0;
+  color: white;
+  background-color: green;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 12px;
+}
+
+.contact {
+  width: 75%;
+}
+
+/* ------------------------- DETAILS ------------------- */
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.carddeatail {
+  width: 75%;
+  margin: 10px 0px;
+}
+
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  /* -------Nav ---------- */
+  nav {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-bottom: 100px;
+  }
+
+  nav img {
+    background-color: white;
+    margin-left: 10px;
+  }
+
+  .links > a {
+    margin: 5px 10px;
+    padding: 5px;
     border: 1px solid black;
-}
-
-td, th{
-    padding:8px;
-    border: 1px solid black;
-}
-
-th{
-    background-color: gray;
-}
-
-fieldset{
+    text-decoration: none;
+    color: black;
+    background-color: white;
+  }
+  .links {
     display: flex;
-    flex-direction: column;
-}
+  }
 
-.btn_reistr{
-    margin: 10px 0;
-    color: white;
-    background-color: green;
-    padding: 10px;
+  /* ------------ Card ----------- */
+
+  /* ------------------ FOOTER -------------- */
+
+  /* ------------------ HEADER ------------------ */
+  .cheveron {
+    font-size: x-large;
+  }
+
+  .titulo {
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+  .category {
+    margin-bottom: 20px;
+  }
+  /* ----------------- TABLE ---------------------- */
+
+  table {
+    width: 90%;
+  }
+
+  td,
+  th {
+    padding: 2px;
     border: 1px solid black;
-    border-radius:12px;
+    font-size: smaller;
+  }
+  /* ------------------ CONTACT -------------------- */
+
+  /* ------------------------- DETAILS ------------------- */
 }
 
-.card{
-    width: 18rem;
+
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------ */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+      /* -------Nav ---------- */
+  nav {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-bottom: 100px;
+  }
+
+  nav img {
+    background-color: white;
+    margin-left: 10px;
+  }
+
+  .links > a {
+    margin: 5px 10px;
+    padding: 5px;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+  }
+  .links {
+    display: flex;
+  }
+
+/* ------------ Card ----------- */
+.cardFoto {
+  padding: 10px;
+}
+
+.card-footer > .col {
+  display: flex;
+  align-items: center;
+}
+
+.card {
+  width: 18rem;
+  padding: 10px;
+  box-shadow: 5px 2px 5px rgba(0, 0, 0, 0.456);
+}
+
+main img {
+  box-shadow: -10px -5px 20px rgba(0, 0, 0, 0.414);
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.row-cols-md-4>* {
+    flex: 0 0 auto;
+    width: 50%;
+}
+
+/* ------------------ FOOTER -------------- */
+
+/* ------------------ HEADER ------------------ */
+.cheveron {
+  text-decoration: none;
+  color: black;
+  font-size: xx-large;
+}
+
+.titulo {
+  padding: 50px;
+  margin-top: 50px;
+}
+
+.subtitle{
+    display:flex;
+    flex-direction:column;
+}
+  .titulo {
+    padding: 20px;
+    margin-top: 50px;
+  }
+  .category {
+    margin-bottom: 20px;
+  }
+
+/* ----------------- TABLE ---------------------- */
+
+table {
+  width: 80%;
+  border: 1px solid black;
+}
+
+td,
+th {
+  padding: 8px;
+  border: 1px solid black;
+}
+
+/* ------------------ CONTACT -------------------- */
+
+
+/* ------------------------- DETAILS ------------------- */
+
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1439px) {
 }

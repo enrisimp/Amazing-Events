@@ -1,4 +1,4 @@
-console.log("test");
+console.log("test DATA");
 
 var data = {
   currentDate: "2022-01-01",
@@ -182,60 +182,3 @@ var data = {
     },
   ],
 };
-
-console.log(events = data.events);
-console.log(nevents = events.length);
-console.log(events);
-upcomingEvents = [];
-pastEvents = [];
-
-// for (let i = 0; i < nevents; i++){
-//     console.log("el nombre es " + events[i].name);
-//     if (data.currentDate > events[i].date) {
-//         console.log("Pasado " + events[i].date);
-//         pastEvents.push(events[i]);
-//     } else {
-//         console.log("Futuro " + events[i].date);
-//         upcomingEvents.push(events[i]);
-//     }
-// }
-
-for (let evento of data.events) {
-  console.log("el nombre es " + evento.name);
-  if (data.currentDate > evento.date) {
-         console.log("Pasado " + evento.date);
-         pastEvents.push(evento);
-     } else {
-         console.log("Futuro " + evento);
-         upcomingEvents.push(evento);
-     }
-  }
-  
-
-
-console.log("Upcoming events " + upcomingEvents);
-for (let event in upcomingEvents) {
-    card = {
-        // img: upcomingEvents[event].image,
-        title: upcomingEvents[event].name,
-        text: upcomingEvents[event].description,
-        price: upcomingEvents[event].price,
-        buton: upcomingEvents[event]._id
-    };
-    console.log("Card " + event + " " + Object.entries(card));
-}
-
-console.log("Past Events " + pastEvents);
-for (let event in pastEvents) {
-  card = {
-    // img: upcomingEvents[event].image,
-    title: upcomingEvents[event].name,
-    text: upcomingEvents[event].description,
-    price: upcomingEvents[event].price,
-    buton: upcomingEvents[event]._id,
-  };
-  console.log("Card " + event + " " + Object.entries(card));
-  for (let datos in card) {
-    console.log(card.datos);
-  }
-}

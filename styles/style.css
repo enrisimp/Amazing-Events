@@ -43,6 +43,11 @@ nav img {
   color: black;
   background-color: white;
 }
+.links > .active {
+  color:white;
+  background-color: crimson;
+}
+
 .links {
   display: flex;
 }

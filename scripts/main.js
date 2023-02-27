@@ -216,7 +216,7 @@ for (let evento of data.events) {
 console.log("Upcoming events " + upcomingEvents);
 for (let event in upcomingEvents) {
     card = {
-        // img: upcomingEvents[event].image,
+        img: upcomingEvents[event].image,
         title: upcomingEvents[event].name,
         text: upcomingEvents[event].description,
         price: upcomingEvents[event].price,
@@ -227,7 +227,7 @@ for (let event in upcomingEvents) {
     console.log(datos + " - " + card[datos]);
   }
   console.table(card);
-  document.write(Object.entries(card));
+  // document.write(Object.entries(card));
   console.log("Card " + event + " " + Object.entries(card));
 }
 
@@ -245,5 +245,5 @@ for (let event in pastEvents) {
     console.log(datos + " - " + card[datos]);
   }
   console.table(card);
-  document.write(Object.entries(card));
+  // document.write(Object.entries(card));
 }

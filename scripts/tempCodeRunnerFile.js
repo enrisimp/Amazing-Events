@@ -220,30 +220,22 @@ for (let event in upcomingEvents) {
         title: upcomingEvents[event].name,
         text: upcomingEvents[event].description,
         price: upcomingEvents[event].price,
-        id: upcomingEvents[event]._id
+        buton: upcomingEvents[event]._id
     };
-      console.log("Card " + event + " " + Object.entries(card));
-  for (let datos in card) {
-    console.log(datos + " - " + card[datos]);
-  }
-  console.table(card);
-  document.write(Object.entries(card));
-  console.log("Card " + event + " " + Object.entries(card));
+    console.log("Card " + event + " " + Object.entries(card));
 }
 
 console.log("Past Events " + pastEvents);
 for (let event in pastEvents) {
   card = {
-    img: upcomingEvents[event].image,
+    // img: upcomingEvents[event].image,
     title: upcomingEvents[event].name,
     text: upcomingEvents[event].description,
     price: upcomingEvents[event].price,
-    id: upcomingEvents[event]._id,
+    buton: upcomingEvents[event]._id,
   };
   console.log("Card " + event + " " + Object.entries(card));
   for (let datos in card) {
-    console.log(datos + " - " + card[datos]);
+    console.log(card.datos);
   }
-  console.table(card);
-  document.write(Object.entries(card));
 }

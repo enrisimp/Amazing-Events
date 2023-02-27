@@ -183,67 +183,44 @@ var data = {
   ],
 };
 
-console.log(events = data.events);
-console.log(nevents = events.length);
-console.log(events);
-upcomingEvents = [];
-pastEvents = [];
+events = data.events;
+let cards = document.getElementsByClassName("cardgroup");
+console.log(cards);
+let fragment = document.createDocumentFragment();
 
-// for (let i = 0; i < nevents; i++){
-//     console.log("el nombre es " + events[i].name);
-//     if (data.currentDate > events[i].date) {
-//         console.log("Pasado " + events[i].date);
-//         pastEvents.push(events[i]);
-//     } else {
-//         console.log("Futuro " + events[i].date);
-//         upcomingEvents.push(events[i]);
-//     }
+for (let evento of events) {
+  console.log("el nombre es " + evento.name);
+}
+
+// for( let evento of events){
+//     listaMentores.innerHTML += `
+//     <li class="item" id="ultimo">
+//     ${mentor}
+//     </li>`
 // }
 
-for (let evento of data.events) {
-  console.log("el nombre es " + evento.name);
-  if (data.currentDate > evento.date) {
-         console.log("Pasado " + evento.date);
-         pastEvents.push(evento);
-     } else {
-         console.log("Futuro " + evento);
-         upcomingEvents.push(evento);
-     }
-  }
-  
+//reflow
+// let div = document.createElement('div')
 
-
-console.log("Upcoming events " + upcomingEvents);
-for (let event in upcomingEvents) {
-    card = {
-        // img: upcomingEvents[event].image,
-        title: upcomingEvents[event].name,
-        text: upcomingEvents[event].description,
-        price: upcomingEvents[event].price,
-        id: upcomingEvents[event]._id
-    };
-      console.log("Card " + event + " " + Object.entries(card));
-  for (let datos in card) {
-    console.log(datos + " - " + card[datos]);
-  }
-  console.table(card);
-  document.write(Object.entries(card));
-  console.log("Card " + event + " " + Object.entries(card));
+for (let evento of events) {
+    htmlCard = ` <div class="col center">
+                        <div class="card border">
+                            <img src="./assets/Cinema.jpg" class="card-img-top cardFoto" alt="cinema">
+                            <div class="card-body">
+                                <h5 class="card-title center">Titulo</h5>
+                                <p class="card-text center">Texto Descriptivo</p>
+                                <div class="row card-footer">
+                                    <div class="col">
+                                        <p class="card-text"><small class="text-muted">Price:$0000</small></p>
+                                    </div>
+                                    <div class="col center">
+                                        <a href="./details.html" class="btn btn-primary">Ver mas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+    cards.innerHTML += htmlCard;
 }
 
-console.log("Past Events " + pastEvents);
-for (let event in pastEvents) {
-  card = {
-    img: upcomingEvents[event].image,
-    title: upcomingEvents[event].name,
-    text: upcomingEvents[event].description,
-    price: upcomingEvents[event].price,
-    id: upcomingEvents[event]._id,
-  };
-  console.log("Card " + event + " " + Object.entries(card));
-  for (let datos in card) {
-    console.log(datos + " - " + card[datos]);
-  }
-  console.table(card);
-  document.write(Object.entries(card));
-}
+// cards.appendChild(fragment);

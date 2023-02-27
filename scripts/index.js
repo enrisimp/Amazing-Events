@@ -184,34 +184,20 @@ var data = {
 };
 
 events = data.events;
-let cards = document.getElementsByClassName("cardgroup");
+let cards = document.getElementById("cardholder");
 console.log(cards);
 let fragment = document.createDocumentFragment();
 
 for (let evento of events) {
-  console.log("el nombre es " + evento.name);
-}
-
-// for( let evento of events){
-//     listaMentores.innerHTML += `
-//     <li class="item" id="ultimo">
-//     ${mentor}
-//     </li>`
-// }
-
-//reflow
-// let div = document.createElement('div')
-
-for (let evento of events) {
     htmlCard = ` <div class="col center">
                         <div class="card border">
-                            <img src="./assets/Cinema.jpg" class="card-img-top cardFoto" alt="cinema">
+                            <img src="${evento.image}" class="card-img-top cardFoto" alt="cinema">
                             <div class="card-body">
-                                <h5 class="card-title center">Titulo</h5>
-                                <p class="card-text center">Texto Descriptivo</p>
+                                <h5 class="card-title center">${evento.name}</h5>
+                                <p class="card-text center">${evento.description}</p>
                                 <div class="row card-footer">
                                     <div class="col">
-                                        <p class="card-text"><small class="text-muted">Price:$0000</small></p>
+                                        <p class="card-text"><small class="text-muted">Price: $${evento.price}</small></p>
                                     </div>
                                     <div class="col center">
                                         <a href="./details.html" class="btn btn-primary">Ver mas</a>
@@ -220,7 +206,8 @@ for (let evento of events) {
                             </div>
                         </div>
                     </div>`;
-    cards.innerHTML += htmlCard;
+  cards.innerHTML += htmlCard;
+  // fragment.appendChild(htmlCard);
 }
 
 // cards.appendChild(fragment);

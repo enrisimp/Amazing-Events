@@ -183,9 +183,9 @@ var data = {
   ],
 };
 
-console.log(events = data.events);
-console.log(nevents = events.length);
-console.log(events);
+console.log((events = data.events));
+console.log((nevents = events.length));
+// console.log(events);
 upcomingEvents = [];
 pastEvents = [];
 
@@ -200,50 +200,93 @@ pastEvents = [];
 //     }
 // }
 
-for (let evento of data.events) {
-  console.log("el nombre es " + evento.name);
-  if (data.currentDate > evento.date) {
-         console.log("Pasado " + evento.date);
-         pastEvents.push(evento);
-     } else {
-         console.log("Futuro " + evento);
-         upcomingEvents.push(evento);
-     }
-  }
-  
+// for (let evento of data.events) {
+//   console.log("el nombre es " + evento.name);
+//   if (data.currentDate > evento.date) {
+//          console.log("Pasado " + evento.date);
+//          pastEvents.push(evento);
+//      } else {
+//          console.log("Futuro " + evento);
+//          upcomingEvents.push(evento);
+//      }
+//   }
 
+// console.log("Upcoming events " + upcomingEvents);
+// for (let event in upcomingEvents) {
+//     card = {
+//         img: upcomingEvents[event].image,
+//         title: upcomingEvents[event].name,
+//         text: upcomingEvents[event].description,
+//         price: upcomingEvents[event].price,
+//         id: upcomingEvents[event]._id
+//     };
+//       console.log("Card " + event + " " + Object.entries(card));
+//   for (let datos in card) {
+//     console.log(datos + " - " + card[datos]);
+//   }
+//   console.table(card);
+//   // document.write(Object.entries(card));
+//   console.log("Card " + event + " " + Object.entries(card));
+// }
 
-console.log("Upcoming events " + upcomingEvents);
-for (let event in upcomingEvents) {
-    card = {
-        img: upcomingEvents[event].image,
-        title: upcomingEvents[event].name,
-        text: upcomingEvents[event].description,
-        price: upcomingEvents[event].price,
-        id: upcomingEvents[event]._id
-    };
-      console.log("Card " + event + " " + Object.entries(card));
-  for (let datos in card) {
-    console.log(datos + " - " + card[datos]);
-  }
-  console.table(card);
-  // document.write(Object.entries(card));
-  console.log("Card " + event + " " + Object.entries(card));
+// console.log("Past Events " + pastEvents);
+// for (let event in pastEvents) {
+//   card = {
+//     img: upcomingEvents[event].image,
+//     title: upcomingEvents[event].name,
+//     text: upcomingEvents[event].description,
+//     price: upcomingEvents[event].price,
+//     id: upcomingEvents[event]._id,
+//   };
+//   console.log("Card " + event + " " + Object.entries(card));
+//   for (let datos in card) {
+//     console.log(datos + " - " + card[datos]);
+//   }
+//   console.table(card);
+//   // document.write(Object.entries(card));
+// }
+
+categoria = [];
+for (let evento of events) {
+  console.log("el categoria es " + evento.category);
+  categoria.push(evento.category);
+  console.log(categoria);
 }
-
-console.log("Past Events " + pastEvents);
-for (let event in pastEvents) {
-  card = {
-    img: upcomingEvents[event].image,
-    title: upcomingEvents[event].name,
-    text: upcomingEvents[event].description,
-    price: upcomingEvents[event].price,
-    id: upcomingEvents[event]._id,
-  };
-  console.log("Card " + event + " " + Object.entries(card));
-  for (let datos in card) {
-    console.log(datos + " - " + card[datos]);
-  }
-  console.table(card);
-  // document.write(Object.entries(card));
-}
+console.log(categoria);
+let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
+document.write(categoria);
+let filtra = x(categoria);
+document.write(filtra);
+console.log(filtra);
+let categorizador = `<div class="form-check d-flex flex-row category">
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[0]}" id="category1" value="1">
+                            <label for="category1">${filtra[0]}</label>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[1]}" id="category2" value="2">
+                            <label for="category2">${filtra[1]}</label>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[2]}" id="category3" value="3">
+                            <label for="category3">${filtra[2]}</label>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[3]}" id="category4" value="4">
+                            <label for="category4">${filtra[3]}</label>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[4]}" id="category5" value="5">
+                            <label for="category5">${filtra[4]}</label>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[5]}" id="category5" value="6">
+                            <label for="category5">${filtra[5]}</label>
+                        </div>
+                        <div class="col">
+                            <input type="checkbox" name="${filtra[6]}" id="category5" value="7">
+                            <label for="category5">${filtra[6]}</label>
+                        </div>
+                    </div>`;
+document.innerHTML = categorizador;
+document.write(categorizador);

@@ -4,9 +4,11 @@ events = data.events;
 let cards = document.getElementById("cardholder");
 console.log(cards);
 let fragment = document.createDocumentFragment();
+let pastEvents = [];
 
 for (let evento of events) {
-  if (data.currentDate > evento.date) {
+    if (data.currentDate > evento.date) {
+      pastEvents.push(evento);
     let card = document.createElement("div");
     card.className = "col center";
     card.innerHTML = ` <div class="card border">
@@ -19,7 +21,7 @@ for (let evento of events) {
                                         <p class="card-text"><small class="text-muted">Price: $${evento.price}</small></p>
                                     </div>
                                     <div class="col center">
-                                        <a href="./details.html" class="btn btn-primary">Ver mas</a>
+                                        <a href="./details.html?id=${evento._id}" class="btn btn-primary">Ver mas</a>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +37,7 @@ for (let evento of events) {
     //                                     <p class="card-text"><small class="text-muted">Price: $${evento.price}</small></p>
     //                                 </div>
     //                                 <div class="col center">
-    //                                     <a href="./details.html" class="btn btn-primary">Ver mas</a>
+    //                                      <a href="./details.html?id=${evento._id}" class="btn btn-primary">Ver mas</a>
     //                                 </div>
     //                             </div>
     //                         </div>
@@ -47,48 +49,28 @@ for (let evento of events) {
 }
 // cards.innerHTML = htmlCards;
 cards.appendChild(fragment);
+console.log(pastEvents);
 
 categoria = [];
 for (let evento of events) {
-  console.log("el categoria es " + evento.category);
+//   console.log("el categoria es " + evento.category);
   categoria.push(evento.category);
-  console.log(categoria);
+//   console.log(categoria);
 }
 console.log(categoria);
 let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
 let filtra = x(categoria);
 document.write(filtra);
-console.log(filtra);
+// console.log(filtra);
 
 let cat = document.getElementById("cat");
-let categorizador = `<div class="form-check d-flex flex-row category">
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[0]}" id="category1" value="1">
-                            <label for="category1">${filtra[0]}</label>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[1]}" id="category2" value="2">
-                            <label for="category2">${filtra[1]}</label>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[2]}" id="category3" value="3">
-                            <label for="category3">${filtra[2]}</label>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[3]}" id="category4" value="4">
-                            <label for="category4">${filtra[3]}</label>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[4]}" id="category5" value="5">
-                            <label for="category5">${filtra[4]}</label>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[5]}" id="category5" value="6">
-                            <label for="category5">${filtra[5]}</label>
-                        </div>
-                        <div class="col">
-                            <input type="checkbox" name="${filtra[6]}" id="category5" value="7">
-                            <label for="category5">${filtra[6]}</label>
-                        </div>
-                    </div>`;
-cat.innerHTML = categorizador;
+for (let category of filtra) {
+    let categorizador = `<div class="col">
+                                <input type="checkbox" name="${category}" id="${category}" value="${category}" checked>
+                                <label for="${category}" class="checkbox-inline">${category}</label>
+                            </div>`;
+    cat.innerHTML += categorizador;
+                          
+
+}
+// cat.innerHTML = categorizador;

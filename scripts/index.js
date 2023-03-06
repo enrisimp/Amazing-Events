@@ -5,8 +5,10 @@ let cards = document.getElementById("cardholder");
 console.log(cards);
 // let htmlCards = "";
 let fragment = document.createDocumentFragment();
+all = [];
 
 for (let evento of events) {
+    all.push(evento);
   let card = document.createElement("div");
   card.className = "col center";
   card.innerHTML = ` <div class="card border">

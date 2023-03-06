@@ -59,9 +59,22 @@ main {
 /* ------------ Category ----------- */
 [type="checkbox"] {
     vertical-align:middle;
+    display: inline-block;
 }
 
+label {
+  display: inline;
+  white-space: nowrap;
+}
 
+.flex-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-wrapper>* {
+  flex: 1 1 33%;
+}
 
 /* ------------ Card ----------- */
 .cardFoto {

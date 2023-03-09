@@ -72,9 +72,9 @@ label {
   flex-wrap: wrap;
 }
 
-.flex-wrapper>* {
+/* .flex-wrapper>* {
   flex: 1 1 33%;
-}
+} */
 
 /* ------------ Card ----------- */
 .cardFoto {

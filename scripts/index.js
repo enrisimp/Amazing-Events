@@ -8,7 +8,7 @@ categoria = [];
 
 for (let evento of events) {
   categoria.push(evento.category);
-  }
+}
 
 // for (let evento of events) {
 //   let card = document.createElement("div");
@@ -43,11 +43,11 @@ let filtra = x(categoria);
 // Creo los checkbox por categoría
 let cat = document.getElementById("cat");
 for (let category of filtra) {
-    let categorizador = `<div class="col" id="fullcheck">
+  let categorizador = `<div class="col" id="fullcheck">
                                 <input type="checkbox" name="category" id="${category}" value="${category}" checked>
                                 <label for="${category}" class="checkbox-inline">${category}</label>
                             </div>`;
-    cat.innerHTML += categorizador;
+  cat.innerHTML += categorizador;
 }
 
 // obtengo los checkbox de categoría
@@ -100,11 +100,16 @@ function displayEvents(eventOs) {
   // BORRAR LISTA DE CARDS
   eventList.innerHTML = "";
 
-  // CREA CARDS
-  eventOs.forEach(function (evento) {
-    let card = document.createElement("div");
-    card.className = "col center";
-    card.innerHTML = ` <div class="card border">
+  if (eventOs.length == 0) {
+    let mensaje = document.createElement("div");
+      mensaje.innerHTML = `<p> no hay resultados. Modifique los filtros </p>`;
+    eventList.appendChild(mensaje);
+  } else {
+    // CREA CARDS
+    eventOs.forEach(function (evento) {
+      let card = document.createElement("div");
+      card.className = "col center";
+      card.innerHTML = ` <div class="card border">
                             <img src="${evento.image}" class="card-img-top cardFoto" alt="cinema">
                             <div class="card-body">
                                 <h5 class="card-title center">${evento.name}</h5>
@@ -119,9 +124,9 @@ function displayEvents(eventOs) {
                                 </div>
                             </div>
                         </div>`;
-    eventList.appendChild(card);
-  });
-
+      eventList.appendChild(card);
+    });
+    };
 };
 
 // Inicio de todos los eventos

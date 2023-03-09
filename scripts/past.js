@@ -84,11 +84,16 @@ function displayEvents(eventOs) {
   // BORRAR LISTA DE CARDS
   eventList.innerHTML = "";
 
-  // CREA CARDS
-  eventOs.forEach(function (evento) {
-    let card = document.createElement("div");
-    card.className = "col center";
-    card.innerHTML = ` <div class="card border">
+  if (eventOs.length == 0) {
+    let mensaje = document.createElement("div");
+    mensaje.innerHTML = `<p> no hay resultados. Modifique los filtros </p>`;
+    eventList.appendChild(mensaje);
+  } else {
+    // CREA CARDS
+    eventOs.forEach(function (evento) {
+      let card = document.createElement("div");
+      card.className = "col center";
+      card.innerHTML = ` <div class="card border">
                             <img src="${evento.image}" class="card-img-top cardFoto" alt="cinema">
                             <div class="card-body">
                                 <h5 class="card-title center">${evento.name}</h5>
@@ -103,9 +108,9 @@ function displayEvents(eventOs) {
                                 </div>
                             </div>
                         </div>`;
-    eventList.appendChild(card);
-  });
-
+      eventList.appendChild(card);
+    });
+  };
 };
 
 // Inicio de todos los eventos

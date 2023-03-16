@@ -1,99 +1,105 @@
 console.log("test");
 
-// VARIABLES
-events = data.events;
-let cards = document.getElementById("cardholder");
-// console.log(cards);
-// let fragment = document.createDocumentFragment();
-let pastEvents = [];
-categoria = [];
+let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
+// let urlAPI = "./api.json";
 
-for (let evento of events) {
+// usage
+getData().then((data) => {
+  // VARIABLES
+  events = data.events;
+  let cards = document.getElementById("cardholder");
+  // console.log(cards);
+  // let fragment = document.createDocumentFragment();
+  let pastEvents = [];
+  categoria = [];
+
+  for (let evento of events) {
     categoria.push(evento.category);
     if (data.currentDate > evento.date) {
       pastEvents.push(evento);
+    }
   }
-}
-//console.log(pastEvents);
+  //console.log(pastEvents);
 
+  //------CATEGORY ----------
+  // busco que no haya categorías repetidas
+  let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
+  let filtra = x(categoria);
+  // document.write(filtra);
+  // console.log(filtra);
 
-//------CATEGORY ----------
-// busco que no haya categorías repetidas
-let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
-let filtra = x(categoria);
-// document.write(filtra);
-// console.log(filtra);
-
-// Creo los checkbox por categoría
-let cat = document.getElementById("cat");
-for (let category of filtra) {
+  // Creo los checkbox por categoría
+  let cat = document.getElementById("cat");
+  for (let category of filtra) {
     let categorizador = `<div class="col" id="fullcheck">
                                 <input type="checkbox" name="category" id="${category}" value="${category}" checked>
                                 <label for="${category}" class="checkbox-inline">${category}</label>
                             </div>`;
     cat.innerHTML += categorizador;
-}
+  }
 
-// obtengo los checkbox de categoría
-const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
+  // obtengo los checkbox de categoría
+  const categoryCheckboxes = document.querySelectorAll(
+    'input[name="category"]'
+  );
 
-// le aplico un event listener a cada checkbox
-categoryCheckboxes.forEach(function (checkbox) {
-  checkbox.addEventListener("change", updateEvents);
-});
+  // le aplico un event listener a cada checkbox
+  categoryCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", updateEvents);
+  });
 
-// le aplico un event listener al Search
-search.addEventListener("input", searchEvents);
-searchbtn.addEventListener("click", searchEvents);
+  // le aplico un event listener al Search
+  search.addEventListener("input", searchEvents);
+  searchbtn.addEventListener("click", searchEvents);
 
-// Filtra los eventos segun la categoría
-function updateEvents() {
-  // Creo un array con los values de los checked
-  const selectedCategories = Array.from(categoryCheckboxes)
-    .filter(function (checkbox) {
-      return checkbox.checked;
-    })
-    .map(function (checkbox) {
-      return checkbox.value;
+  // Filtra los eventos segun la categoría
+  function updateEvents() {
+    // Creo un array con los values de los checked
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter(function (checkbox) {
+        return checkbox.checked;
+      })
+      .map(function (checkbox) {
+        return checkbox.value;
+      });
+
+    const filteredEvents = pastEvents.filter(function (event) {
+      return selectedCategories.includes(event.category);
     });
 
-  const filteredEvents = pastEvents.filter(function (event) {
-    return selectedCategories.includes(event.category);
-  });
+    displayEvents(filteredEvents);
+  }
 
-  displayEvents(filteredEvents);
-}
+  // Busca/Filtra los eventos segun la busqueda
+  function searchEvents() {
+    const searchTerm = search.value.toLowerCase();
+    const filteredEvents = pastEvents.filter((event) => {
+      const nameMatch = event.name.toLowerCase().includes(searchTerm);
+      const descriptionMatch = event.description
+        .toLowerCase()
+        .includes(searchTerm);
+      return nameMatch || descriptionMatch;
+    });
+    displayEvents(filteredEvents);
+  }
 
-// Busca/Filtra los eventos segun la busqueda
-function searchEvents() {
-  const searchTerm = search.value.toLowerCase();
-  const filteredEvents = pastEvents.filter((event) => {
-    const nameMatch = event.name.toLowerCase().includes(searchTerm);
-    const descriptionMatch = event.description
-      .toLowerCase()
-      .includes(searchTerm);
-    return nameMatch || descriptionMatch;
-  });
-  displayEvents(filteredEvents);
-}
+  // MUESTRA EVENTOS FILTRADOS
+  function displayEvents(eventOs) {
+    let eventList = document.getElementById("cardholder");
 
-// MUESTRA EVENTOS FILTRADOS
-function displayEvents(eventOs) {
-  let eventList = document.getElementById("cardholder");
+    // BORRAR LISTA DE CARDS
+    eventList.innerHTML = "";
 
-  // BORRAR LISTA DE CARDS
-  eventList.innerHTML = "";
-
-  if (eventOs.length == 0) {
-    let mensaje = document.createElement("div");
-    mensaje.innerHTML = `<p> no hay resultados. Modifique los filtros </p>`;
-    eventList.appendChild(mensaje);
-  } else {
-    // CREA CARDS
-    eventOs.forEach(function (evento) {
-      let card = document.createElement("div");
-      card.className = "col center";
-      card.innerHTML = ` <div class="card border">
+    if (eventOs.length == 0) {
+      let mensaje = document.createElement("div");
+      mensaje.innerHTML = `<p> no hay resultados. Modifique los filtros </p>`;
+      eventList.appendChild(mensaje);
+    } else {
+      // CREA CARDS
+      eventOs.forEach(function (evento) {
+        let card = document.createElement("div");
+        card.className = "col center";
+        card.innerHTML = ` <div class="card border">
                             <img src="${evento.image}" class="card-img-top cardFoto" alt="cinema">
                             <div class="card-body">
                                 <h5 class="card-title center">${evento.name}</h5>
@@ -108,12 +114,28 @@ function displayEvents(eventOs) {
                                 </div>
                             </div>
                         </div>`;
-      eventList.appendChild(card);
-    });
-  };
-};
+        eventList.appendChild(card);
+      });
+    }
+  }
 
-// Inicio de todos los eventos
-displayEvents(pastEvents);
+  // Inicio de todos los eventos
+  displayEvents(pastEvents);
 
-// updateEvents();
+  // updateEvents();
+});
+
+// Consigue los datos
+async function getData() {
+  try {
+    //////genero un error para mostrar
+    //throw new Error('se exploto el servidor')
+    let respuesta = await fetch(urlAPI);
+    // console.log(respuesta)
+    let datos = await respuesta.json();
+    //  console.log(datos.events);
+    return await datos;
+  } catch {
+    console.log("ocurrio un error con mi api");
+  }
+}

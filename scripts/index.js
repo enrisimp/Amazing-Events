@@ -43,6 +43,23 @@ getData().then((data) => {
   search.addEventListener("input", searchEvents);
   searchbtn.addEventListener("click", searchEvents);
 
+  // Filtra los eventos segun la categoría
+  function updateEvents() {
+    // Creo un array con los values de los checked
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter(function (checkbox) {
+        return checkbox.checked;
+      })
+      .map(function (checkbox) {
+        return checkbox.value;
+      });
+
+    const filteredEvents = events.filter(function (event) {
+      return selectedCategories.includes(event.category);
+    });
+
+    displayEvents(filteredEvents);
+  }
   // Inicio de todos los eventos
   displayEvents(events);
 
@@ -102,23 +119,6 @@ function displayEvents(eventOs) {
 }
 
 // FILTROS
-// Filtra los eventos segun la categoría
-function updateEvents() {
-  // Creo un array con los values de los checked
-  const selectedCategories = Array.from(categoryCheckboxes)
-    .filter(function (checkbox) {
-      return checkbox.checked;
-    })
-    .map(function (checkbox) {
-      return checkbox.value;
-    });
-
-  const filteredEvents = events.filter(function (event) {
-    return selectedCategories.includes(event.category);
-  });
-
-  displayEvents(filteredEvents);
-}
 
 // Busca/Filtra los eventos segun la busqueda
 function searchEvents() {

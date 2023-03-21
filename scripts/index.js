@@ -2,64 +2,40 @@ console.log("test");
 
 let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
 // let urlAPI = "./api.json";
+let categoryCheckboxes = [];
+let events = [];
 
 // usage
 getData().then((data) => {
+  // VARIABLES
   events = data.events;
-  categoria = [];
+  categories = [];
 
   for (let evento of events) {
-    categoria.push(evento.category);
+    if (!categories.includes(evento.category)) {
+      categories.push(evento.category);
+    }
   }
 
   //------CATEGORY ----------
   // busco que no haya categorías repetidas
-  let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
-  let filtra = x(categoria);
+  // let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
+  // let filtra = x(categoria);
   // document.write(filtra);
   // console.log(filtra);
 
-  // Creo los checkbox por categoría
-  let cat = document.getElementById("cat");
-  for (let category of filtra) {
-    let categorizador = `<div class="col" id="fullcheck">
-                                <input type="checkbox" name="category" id="${category}" value="${category}" checked>
-                                <label for="${category}" class="checkbox-inline">${category}</label>
-                            </div>`;
-    cat.innerHTML += categorizador;
-  }
+  createCheckboxes(categories);
 
-  // obtengo los checkbox de categoría
-  const categoryCheckboxes = document.querySelectorAll(
-    'input[name="category"]'
-  );
-
-  // le aplico un event listener a cada checkbox
+  // obtengo los checkbox de categoría y le aplico un event listener a cada checkbox
+  categoryCheckboxes = document.querySelectorAll('input[name="category"]');
   categoryCheckboxes.forEach(function (checkbox) {
-    checkbox.addEventListener("change", updateEvents);
+    checkbox.addEventListener("change", searchEvents);
   });
 
   // le aplico un event listener al Search
   search.addEventListener("input", searchEvents);
   searchbtn.addEventListener("click", searchEvents);
 
-  // Filtra los eventos segun la categoría
-  function updateEvents() {
-    // Creo un array con los values de los checked
-    const selectedCategories = Array.from(categoryCheckboxes)
-      .filter(function (checkbox) {
-        return checkbox.checked;
-      })
-      .map(function (checkbox) {
-        return checkbox.value;
-      });
-
-    const filteredEvents = events.filter(function (event) {
-      return selectedCategories.includes(event.category);
-    });
-
-    displayEvents(filteredEvents);
-  }
   // Inicio de todos los eventos
   displayEvents(events);
 
@@ -122,13 +98,66 @@ function displayEvents(eventOs) {
 
 // Busca/Filtra los eventos segun la busqueda
 function searchEvents() {
-  const searchTerm = search.value.toLowerCase();
-  const filteredEvents = events.filter((event) => {
-    const nameMatch = event.name.toLowerCase().includes(searchTerm);
-    const descriptionMatch = event.description
-      .toLowerCase()
-      .includes(searchTerm);
-    return nameMatch || descriptionMatch;
-  });
+  let textoBusqueda = search.value.toLowerCase();
+  // console.log(textoBusqueda);
+  let checked = getChequeados();
+let filteredEvents = events.filter((event) => {
+  let nameMatch = event.name.toLowerCase().includes(textoBusqueda);
+  let descriptionMatch = event.description
+    .toLowerCase()
+    .includes(textoBusqueda);
+  if (nameMatch || descriptionMatch) {
+    return true;
+  }
+  return false;
+});
+    if (checked.length > 0) {
+        filteredEvents = filteredEvents.filter(event => {
+          return checked.some((check) => event.category.includes(check));
+        });
+  }
+  ;
   displayEvents(filteredEvents);
 }
+
+//   // Filtra los eventos segun la categoría
+//   function updateEvents() {
+//     // Creo un array con los values de los checked
+//     const selectedCategories = Array.from(categoryCheckboxes)
+//       .filter(function (checkbox) {
+//         return checkbox.checked;
+//       })
+//       .map(function (checkbox) {
+//         return checkbox.value;
+//       });
+
+//     const filteredEvents = events.filter(function (event) {
+//       return selectedCategories.includes(event.category);
+//     });
+
+//     displayEvents(filteredEvents);
+// }
+  
+function createCheckboxes(categories) {
+  // Creo los checkbox por categoría
+  let cat = document.getElementById("cat");
+  for (let category of categories) {
+    let categorizador = `<div class="col" id="fullcheck">
+                                <input type="checkbox" name="category" id="${category}" value="${category}">
+                                <label for="${category}" class="checkbox-inline">${category}</label>
+                            </div>`;
+    cat.innerHTML += categorizador;
+  }
+}
+
+function getChequeados() {
+  let chequeados = [];
+  categoryCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      chequeados.push(checkbox.value);
+    }
+  });
+  // console.log(chequeados);
+  return chequeados;
+}
+

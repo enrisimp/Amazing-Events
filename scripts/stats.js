@@ -18,19 +18,23 @@ async function getData() {
     let datos = await respuesta.json();
     //  console.log(datos.events);
     return await datos;
-  } catch {
-    console.log("ocurrio un error con mi api");
+  } catch (error) {
+    console.log(error.message);
   }
 }
 // usage
 getData().then((data) => {
+
+  // Preparar Arrays
   events = data.events;
   // console.log(events);
   for (let evento of events) {
     if (data.currentDate < evento.date) {
-      // porcentaje de asistencia
+      // Calculo porcentaje de asistencia y recaudación individual
       evento.attendance = (evento.estimate / evento.capacity) * 100;
       evento.revenues = evento.estimate * evento.price;
+
+
       if (!Ucategory.includes(evento.category)) {
         Ucategory.push(evento.category);
         // Ucategory.push({
@@ -41,9 +45,13 @@ getData().then((data) => {
         //   percentage: 0,
         // });
       }
+
+
       upcomingEvents.push(evento);
+      // console.log(evento.attendance);
+      // console.log(evento.revenues);
     } else {
-      // porcentaje de asistencia
+      // Calculo porcentaje de asistencia y recaudación individual
       evento.attendance = (evento.assistance / evento.capacity) * 100;
       evento.revenues = evento.assistance * evento.price;
       if (!Pcategory.includes(evento.category)) {
@@ -58,107 +66,16 @@ getData().then((data) => {
       }
       pastEvents.push(evento);
       // console.log(evento.attendance);
+      // console.log(evento.revenues);
     }
   }
-  const PcategoryO = Pcategory.map((category) => {
-    return {
-      name: category,
-      revenues: 0,
-      attendance: 0,
-      capacity: 0,
-      percentage: 0,
-    };
-  });
+  // console.log(Pcategory);
+  // console.log(Ucategory);
+  // console.log(pastEvents);
+  // console.log(upcomingEvents);
 
-  const UcategoryO = Ucategory.map((category) => {
-    return {
-      name: category,
-      revenues: 0,
-      attendance: 0,
-      capacity: 0,
-      percentage: 0,
-    };
-  });
-  console.log(PcategoryO);
-  console.log(UcategoryO);
-  console.log(pastEvents);
-  console.log(upcomingEvents);
-
-  // Render + calculos Moyores y menores
-
-  let table = document.getElementById("table");
-  // console.log(table);
-  let hightest = getHigh(pastEvents);
-  let lowest = getLow(pastEvents);
-  let largest = getLarge(events);
-  // console.log(lowest);
-  // console.log(hightest);
-  // console.log(largest);
-   table.innerHTML += `<tr>
-      <td>${hightest.name}</td>
-      <td>${lowest.name}</td>
-      <td>${largest.name}</td>
-                </tr>`;
-
-  // Render + calculos x categoria
-  // let table = document.getElementById("table");
-  // console.log(table);
-  table.innerHTML += `<tr>
-                    <th colspan="3" id="upcoming">Upcoming events statistics by category</th>
-                </tr>
-                <tr>
-                    <td>Categories</td>
-                    <td>Revenues</td>
-                    <td>Porcentage of attendance</td>
-                </tr>`;
-  for (let cat of UcategoryO) {
-    // console.log(cat);
-    for (let evento of upcomingEvents) {
-      if (cat.name == evento.category) {
-        cat.revenues += evento.revenues;
-        cat.attendance += evento.estimate;
-        cat.capacity += evento.capacity;
-      }
-      // console.log(cat);
-    }
-    cat.percentage = (cat.attendance / cat.capacity) * 100;
-    table.innerHTML += ` <tr>
-                    <td>${cat.name}</td>
-                    <td>$ ${cat.revenues}</td>
-                    <td>${Math.round(cat.percentage)} %</td>
-                </tr>`;
-  }
-  // console.log(filtraUcategory);
-
-  //// By Past Category
-  table.innerHTML += `<tr>
-                    <th colspan="3" id="past">Past events statistics by category</th>
-                </tr>
-                <tr>
-                    <td>Categories</td>
-                    <td>Revenues</td>
-                    <td>Porcentage of attendance</td>
-                </tr>`;
-  for (let cat of PcategoryO) {
-    // console.log(cat);
-    for (let evento of pastEvents) {
-      if (cat.name == evento.category) {
-        cat.attendance += evento.assistance;
-        cat.revenues += evento.revenues;
-        cat.capacity += evento.capacity;
-      }
-    }
-    cat.percentage = (cat.attendance / cat.capacity) * 100;
-    table.innerHTML += ` <tr>
-                    <td>${cat.name}</td>
-                    <td>$ ${cat.revenues}</td>
-                    <td>${Math.round(cat.percentage)} %</td>
-                </tr>`;
-  }
-  // console.log(filtraPcategory);
-  // for (let categoria of events) {
-  //   console.log(categoria);
-  // }
+  // Render + calculos Mayores y menores
+  createTable();
 });
 
 function getHigh(eventos) {
@@ -190,4 +107,98 @@ function getLarge(eventos) {
     }
   });
 }
+
+function createTable() {
+  let table = document.getElementById("table");
+  // console.log(table);
+
+  // Paso las categorias a objetos con propiedades
+  const PcategoryO = Pcategory.map((category) => {
+    return {
+      name: category,
+      revenues: 0,
+      attendance: 0,
+      capacity: 0,
+      percentage: 0,
+    };
+  });
+
+  const UcategoryO = Ucategory.map((category) => {
+    return {
+      name: category,
+      revenues: 0,
+      attendance: 0,
+      capacity: 0,
+      percentage: 0,
+    };
+  });
+
+  // Consigo los mayores y menores
+  let hightest = getHigh(pastEvents);
+  let lowest = getLow(pastEvents);
+  let largest = getLarge(events);
+  // console.log(lowest);
+  // console.log(hightest);
+  // console.log(largest);
+
+  table.innerHTML += `<tr>
+    <td>${hightest.name}</td>
+    <td>${lowest.name}</td>
+    <td>${largest.name}</td>
+              </tr>`;
+  
+  // Bt Upcoming Category
+  table.innerHTML += `<tr>
+                  <th colspan="3" id="upcoming">Upcoming events statistics by category</th>
+              </tr>
+              <tr>
+                  <td>Categories</td>
+                  <td>Revenues</td>
+                  <td>Porcentage of attendance</td>
+              </tr>`;
+
+  resumenCategoria(UcategoryO, upcomingEvents);
+
+  //// By Past Category
+  table.innerHTML += `<tr>
+                    <th colspan="3" id="past">Past events statistics by category</th>
+                </tr>
+                <tr>
+                    <td>Categories</td>
+                    <td>Revenues</td>
+                    <td>Porcentage of attendance</td>
+                </tr>`;
+  
+  resumenCategoria(PcategoryO, pastEvents);
+  
+}
+function resumenCategoria(categoryO, eventC) {
+  // Calculos x categoria
+  for (let cat of categoryO) {
+    // console.log(cat);
+    for (let evento of eventC) {
+      if (cat.name == evento.category) {
+        cat.revenues += evento.revenues;
+        if (evento.estimate > 0) {
+          cat.attendance += evento.estimate;  
+        } else {
+          cat.attendance += evento.assistance;
+        }
+        cat.capacity += evento.capacity;
+        console.log(cat, evento.name);
+      }
+    }
+    cat.percentage = (cat.attendance / cat.capacity) * 100;
+    dibujarCategoria(cat);
+  }
+}
+
+
+function dibujarCategoria(cat){
+  table.innerHTML += ` <tr>
+                    <td>${cat.name}</td>
+                    <td>$ ${cat.revenues}</td>
+                    <td>${Math.round(cat.percentage)} %</td>
+                </tr>`;
+};
 

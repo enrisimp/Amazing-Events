@@ -2,6 +2,7 @@ console.log("test");
 
 let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
 // let urlAPI = "./api.json";
+
 let categoryCheckboxes = [];
 let events = [];
 

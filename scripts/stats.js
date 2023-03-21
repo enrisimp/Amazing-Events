@@ -1,6 +1,6 @@
 console.log("test");
-// let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
-let urlAPI = "./assets/api.json";
+let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
+// let urlAPI = "./assets/api.json";
 
 let upcomingEvents = [];
 let pastEvents = [];
@@ -31,9 +31,8 @@ getData().then((data) => {
   for (let evento of events) {
     if (data.currentDate < evento.date) {
       // Calculo porcentaje de asistencia y recaudación individual
-      evento.attendance = (evento.estimate / evento.capacity) * 100;
+      evento.percentage = (evento.estimate / evento.capacity) * 100;
       evento.revenues = evento.estimate * evento.price;
-
 
       if (!Ucategory.includes(evento.category)) {
         Ucategory.push(evento.category);
@@ -46,13 +45,12 @@ getData().then((data) => {
         // });
       }
 
-
       upcomingEvents.push(evento);
-      // console.log(evento.attendance);
+      // console.log(evento.percentage);
       // console.log(evento.revenues);
     } else {
       // Calculo porcentaje de asistencia y recaudación individual
-      evento.attendance = (evento.assistance / evento.capacity) * 100;
+      evento.percentage = (evento.assistance / evento.capacity) * 100;
       evento.revenues = evento.assistance * evento.price;
       if (!Pcategory.includes(evento.category)) {
         Pcategory.push(evento.category);
@@ -65,7 +63,7 @@ getData().then((data) => {
         // });
       }
       pastEvents.push(evento);
-      // console.log(evento.attendance);
+      // console.log(evento.percentage);
       // console.log(evento.revenues);
     }
   }
@@ -80,7 +78,7 @@ getData().then((data) => {
 
 function getHigh(eventos) {
   return eventos.reduce((acumulador, valorActual) => {
-    if (valorActual.attendance > acumulador.attendance) {
+    if (valorActual.percentage > acumulador.percentage) {
       return valorActual;
     } else {
       return acumulador;
@@ -90,7 +88,7 @@ function getHigh(eventos) {
 
 function getLow(eventos) {
   return eventos.reduce((acumulador, valorActual) => {
-    if (valorActual.attendance < acumulador.attendance) {
+    if (valorActual.percentage < acumulador.percentage) {
       return valorActual;
     } else {
       return acumulador;

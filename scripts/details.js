@@ -1,5 +1,7 @@
 console.log("test detail");
 let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
+// let urlAPI = "./api.json";
+
 const queryString = location.search;
 const urlParams = new URLSearchParams(queryString);
 

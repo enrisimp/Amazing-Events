@@ -2,163 +2,55 @@ console.log("test");
 
 let urlAPI = "https://mindhub-xj03.onrender.com/api/amazing";
 // let urlAPI = "./api.json";
+const { createApp } = Vue;
 
-let categoryCheckboxes = [];
-let events = [];
-
-// usage
-getData().then((data) => {
-  // VARIABLES
-  events = data.events;
-  categories = [];
-
-  for (let evento of events) {
-    if (!categories.includes(evento.category)) {
-      categories.push(evento.category);
-    }
-  }
-
-  //------CATEGORY ----------
-  // busco que no haya categorías repetidas
-  // let x = (categoria) => categoria.filter((v, i) => categoria.indexOf(v) === i);
-  // let filtra = x(categoria);
-  // document.write(filtra);
-  // console.log(filtra);
-
-  createCheckboxes(categories);
-
-  // obtengo los checkbox de categoría y le aplico un event listener a cada checkbox
-  categoryCheckboxes = document.querySelectorAll('input[name="category"]');
-  categoryCheckboxes.forEach(function (checkbox) {
-    checkbox.addEventListener("change", searchEvents);
-  });
-
-  // le aplico un event listener al Search
-  search.addEventListener("input", searchEvents);
-  searchbtn.addEventListener("click", searchEvents);
-
-  // Inicio de todos los eventos
-  displayEvents(events);
-
-  // updateEvents();
+const app = createApp({
+  data() {
+    return {
+      urlApi: "https://mindhub-xj03.onrender.com/api/amazing",
+      events: [],
+      backupEventos: [],
+      textoBusqueda: "",
+      categories: [],
+      checked: [],
+    };
+  },
+  created() {
+    this.traerDatos();
+  },
+  methods: {
+    traerDatos() {
+      fetch(this.urlApi)
+        .then((response) => response.json())
+        .then((data) => {
+          this.events = data.events;
+          this.backupEventos = this.events;
+          this.extraerCategorys(this.events);
+        })
+        .catch((error) => console.log(error.message));
+    },
+    extraerCategorys(array) {
+      array.forEach((elemento) => {
+        if (!this.categories.includes(elemento.category)) {
+          this.categories.push(elemento.category);
+        }
+      });
+    },
+  },
+  computed: {
+    filtroDoble() {
+      let primerFiltro = this.backupEventos.filter((evento) =>
+        evento.name.toLowerCase().includes(this.textoBusqueda.toLowerCase())
+      );
+      if (this.checked.length > 0) {
+        return primerFiltro.filter((evento) =>
+          this.checked.includes(evento.category)
+        );
+      } else {
+        return primerFiltro;
+      }
+    },
+  },
 });
 
-// Consigue los datos
-async function getData() {
-  try {
-    //////genero un error para mostrar
-    //throw new Error('se exploto el servidor')
-    let respuesta = await fetch(urlAPI);
-    // console.log(respuesta)
-    let datos = await respuesta.json();
-    //  console.log(datos.events);
-    return await datos;
-  } catch {
-    console.log("ocurrio un error con mi api");
-  }
-}
-
-// MUESTRA EVENTOS FILTRADOS
-function displayEvents(eventOs) {
-  let eventList = document.getElementById("cardholder");
-  let fragment = document.createDocumentFragment();
-
-  // BORRAR LISTA DE CARDS
-  eventList.innerHTML = "";
-
-  if (eventOs.length == 0) {
-    let mensaje = document.createElement("div");
-    mensaje.innerHTML = `<p> no hay resultados. Modifique los filtros </p>`;
-    eventList.appendChild(mensaje);
-  } else {
-    // CREA CARDS
-    eventOs.forEach(function (evento) {
-      let card = document.createElement("div");
-      card.className = "col center";
-      card.innerHTML = ` <div class="card border">
-                            <img src="${evento.image}" class="card-img-top cardFoto" alt="cinema">
-                            <div class="card-body">
-                                <h5 class="card-title center">${evento.name}</h5>
-                                <p class="card-text center">${evento.description}</p>
-                                <div class="row card-footer">
-                                    <div class="col">
-                                        <p class="card-text"><small class="text-muted">Price: $${evento.price}</small></p>
-                                    </div>
-                                    <div class="col center">
-                                        <a href="./details.html?id=${evento._id}" class="btn btn-primary">Ver mas</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-      eventList.appendChild(card);
-    });
-  }
-}
-
-// FILTROS
-
-// Busca/Filtra los eventos segun la busqueda
-function searchEvents() {
-  let textoBusqueda = search.value.toLowerCase();
-  // console.log(textoBusqueda);
-  let checked = getChequeados();
-let filteredEvents = events.filter((event) => {
-  let nameMatch = event.name.toLowerCase().includes(textoBusqueda);
-  let descriptionMatch = event.description
-    .toLowerCase()
-    .includes(textoBusqueda);
-  if (nameMatch || descriptionMatch) {
-    return true;
-  }
-  return false;
-});
-    if (checked.length > 0) {
-        filteredEvents = filteredEvents.filter(event => {
-          return checked.some((check) => event.category.includes(check));
-        });
-  }
-  ;
-  displayEvents(filteredEvents);
-}
-
-//   // Filtra los eventos segun la categoría
-//   function updateEvents() {
-//     // Creo un array con los values de los checked
-//     const selectedCategories = Array.from(categoryCheckboxes)
-//       .filter(function (checkbox) {
-//         return checkbox.checked;
-//       })
-//       .map(function (checkbox) {
-//         return checkbox.value;
-//       });
-
-//     const filteredEvents = events.filter(function (event) {
-//       return selectedCategories.includes(event.category);
-//     });
-
-//     displayEvents(filteredEvents);
-// }
-  
-function createCheckboxes(categories) {
-  // Creo los checkbox por categoría
-  let cat = document.getElementById("cat");
-  for (let category of categories) {
-    let categorizador = `<div class="col" id="fullcheck">
-                                <input type="checkbox" name="category" id="${category}" value="${category}">
-                                <label for="${category}" class="checkbox-inline">${category}</label>
-                            </div>`;
-    cat.innerHTML += categorizador;
-  }
-}
-
-function getChequeados() {
-  let chequeados = [];
-  categoryCheckboxes.forEach((checkbox) => {
-    if (checkbox.checked) {
-      chequeados.push(checkbox.value);
-    }
-  });
-  // console.log(chequeados);
-  return chequeados;
-}
-
+app.mount("#app");
